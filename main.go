@@ -22,10 +22,10 @@ type LotterySource interface {
 	RefreshForm(doc *goquery.Document)
 }
 
-var lotterySources = map[string]LotterySource {
-    "38": NewLottery38(),
-    "39": NewLottery39(),
-    "49": NewLottery49(),
+var lotterySources = map[string]LotterySource{
+	"38": NewLottery38(),
+	"39": NewLottery39(),
+	"49": NewLottery49(),
 }
 
 func QueryLast(game string) []LotteryInfo {
@@ -40,7 +40,7 @@ func QueryLast(game string) []LotteryInfo {
 	source.RefreshForm(doc)
 
 	s := doc.Find(".td_hm")
-	var ret []LotteryInfo
+	ret := []LotteryInfo{}
 	for i := 0; i < s.Size(); i += 1 {
 		ret = append(ret, source.GetInfo(s.Eq(i)))
 	}
@@ -83,7 +83,7 @@ func QueryByMonth(game string, year string, month string) []LotteryInfo {
 	}
 	source.RefreshForm(doc)
 
-	var ret []LotteryInfo
+	ret := []LotteryInfo{}
 	for i := 0; i < s.Size(); i += 1 {
 		ret = append(ret, source.GetInfo(s.Eq(i)))
 	}
@@ -91,5 +91,5 @@ func QueryByMonth(game string, year string, month string) []LotteryInfo {
 }
 
 func getGameSource(game string) LotterySource {
-    return lotterySources[game]
+	return lotterySources[game]
 }
